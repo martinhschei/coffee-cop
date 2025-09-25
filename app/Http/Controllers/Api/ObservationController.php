@@ -35,10 +35,12 @@ class ObservationController extends Controller
             'metadata' => request()->input('metadata', []),
         ]);
 
-                return response()->json(
+        /*
+        return response()->json(
             $imageCrops,
             201
         );
+        */
 
         foreach ($imageCrops as $name => $crop) {
             $result = VisionService::analyzeImageWithPrompt($crop['url'], Prompts::get($name));
