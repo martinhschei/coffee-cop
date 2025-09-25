@@ -61,10 +61,8 @@ class ObservationImage
         }
         $imageData = ob_get_clean();
 
-        $storagePath = request()->file('image')->store('observations', 'public');
-        $stored = \Storage::disk('public')->put($storagePath, $imageData);
-        $this->storedAt = \Storage::disk('public')->path($storagePath);
-
+        Log::debug("Storing rotated image at {$this->path}");
+        file_put_contents($this->path, $imageData);
         \imagedestroy($imageResource);
         \imagedestroy($rotated);
     }

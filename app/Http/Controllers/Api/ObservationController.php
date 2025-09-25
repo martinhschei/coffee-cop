@@ -9,6 +9,7 @@ use App\Models\Observation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use App\ObservationImage;
 
 class ObservationController extends Controller
 {
@@ -34,10 +35,9 @@ class ObservationController extends Controller
 
         $guid = \Str::uuid()->toString();
         $path = request()->file('image')->store('observations/' . $guid, 'public');
-        $image = request()->file('image');
         $storagePath = \Storage::disk('public')->path($path);
 
-        $observationImage = new \App\ObservationImage($storagePath, $image->getMimeType(), $guid);
+        $observationImage = new ObservationImage($storagePath, request()->file('image')->getMimeType(), $guid);
         $observationImage->rotate();
         $imageCrops = $observationImage->crop();
 
@@ -47,12 +47,12 @@ class ObservationController extends Controller
             'metadata' => request()->input('metadata', []),
         ]);
 
-        /*
+
         return response()->json(
             $imageCrops,
             201
         );
-        */
+
 
         foreach ($imageCrops as $name => $crop) {
             $result = VisionService::analyzeImageWithPrompt($crop['url'], Prompts::get($name));
