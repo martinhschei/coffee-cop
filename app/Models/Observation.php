@@ -17,7 +17,7 @@ class Observation extends Model
 
     public function analysis()
     {
-        return $this->hasOne(Analysis::class);
+        return $this->hasMany(Analysis::class);
     }
 
     public function analyze()
