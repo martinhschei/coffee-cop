@@ -14,6 +14,17 @@ class ObservationController extends Controller
 {
     protected $guarded = [];
 
+    public function latest()
+    {
+        $observation = Observation::with('analysis')->latest()->first();
+
+        if (!$observation) {
+            return response()->json(['message' => 'No observations found'], 404);
+        }
+
+        return response()->json($observation);
+    }
+
     public function store()
     {
         request()->validate([
@@ -27,6 +38,7 @@ class ObservationController extends Controller
         $storagePath = \Storage::disk('public')->path($path);
 
         $observationImage = new \App\ObservationImage($storagePath, $image->getMimeType(), $guid);
+        $observationImage->rotate();
         $imageCrops = $observationImage->crop();
 
         $observation = Observation::create([
