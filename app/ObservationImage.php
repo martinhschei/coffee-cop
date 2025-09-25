@@ -11,7 +11,8 @@ class ObservationImage
     private $crops = [
         'water_tank' => ['x' => 25, 'y' => 200, 'width' => 275, 'height' => 250],
         'coffee_mug' => ['x' => 350, 'y' => 650, 'width' => 275, 'height' => 250],
-        'power_buttons' => ['x' => 10, 'y' => 950, 'width' => 275, 'height' => 75],
+        'power_button' => ['x' => 22, 'y' => 960, 'width' => 120, 'height' => 55],
+        'heating_plate_button' => ['x' => 161, 'y' => 962, 'width' => 117, 'height' => 50],
     ];
 
     public function __construct(string $path, string $mimeType, string $uuid = null)
