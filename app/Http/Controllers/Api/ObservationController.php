@@ -41,6 +41,7 @@ class ObservationController extends Controller
             $observation->analysis()->create([
                 'name' => $name,
                 'result' => $result,
+                'url' => $crop['url'],
                 'image_path' => $crop['path'],
                 'prompt' => Prompts::get($name),
             ]);
