@@ -37,10 +37,10 @@ class ObservationController extends Controller
 
         foreach ($imageCrops as $name => $crop) {
             $result = VisionService::analyzeImageWithPrompt($crop['url'], Prompts::get($name));
-            Log::info("VisionService result for {$name}: " . json_encode($result));
+
             $observation->analysis()->create([
+                'name' => $name,
                 'result' => $result,
-                'crop_name' => $name,
                 'image_path' => $crop['path'],
                 'prompt' => Prompts::get($name),
             ]);
